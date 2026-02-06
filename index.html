@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Suporte SOPS - Fevereiro 2026</title>
+    <title>Dashboard Executiva - Suporte SOPS</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
             margin: 0;
@@ -12,734 +13,957 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
             padding: 20px;
-            min-height: 100vh;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
         }
         
         .header {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
-            text-align: center;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            border: 1px solid #334155;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
         
-        .header h1 {
-            color: #667eea;
-            font-size: 32px;
-            margin-bottom: 10px;
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .header .subtitle {
-            color: #666;
+        .header-left h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header-left .period {
+            color: #94a3b8;
             font-size: 16px;
         }
         
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+        .header-right {
+            text-align: right;
         }
         
-        .metric-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .metric-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .metric-card .label {
-            color: #666;
+        .header-right .update-time {
+            color: #94a3b8;
             font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             margin-bottom: 10px;
         }
         
-        .metric-card .value {
-            font-size: 36px;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 5px;
+        .header-right .gabriel-logo {
+            color: #60a5fa;
+            font-size: 24px;
+            font-weight: 700;
         }
         
-        .metric-card .subtitle {
-            color: #999;
-            font-size: 13px;
-        }
-        
-        .metric-card.success .value {
-            color: #10b981;
-        }
-        
-        .metric-card.warning .value {
-            color: #f59e0b;
-        }
-        
-        .metric-card.info .value {
-            color: #3b82f6;
-        }
-        
-        .chart-container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
-        }
-        
-        .chart-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .bar-chart {
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
             margin-bottom: 30px;
         }
         
-        .bar-item {
+        .kpi-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            border-color: #3b82f6;
+        }
+        
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+        
+        .kpi-icon {
+            font-size: 32px;
             margin-bottom: 15px;
         }
         
-        .bar-label {
+        .kpi-label {
+            font-size: 13px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .kpi-value {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .kpi-subtitle {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        .kpi-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .badge-success {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+        
+        .badge-warning {
+            background: rgba(251, 146, 60, 0.2);
+            color: #fb923c;
+        }
+        
+        .chart-container {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid #334155;
+        }
+        
+        .chart-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #333;
-        }
-        
-        .bar-bg {
-            background: #f0f0f0;
-            height: 30px;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            display: flex;
             align-items: center;
-            padding-left: 15px;
-            color: white;
-            font-weight: bold;
-            font-size: 12px;
-            transition: width 1s ease;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #334155;
+        }
+        
+        .chart-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+        
+        .chart-subtitle {
+            font-size: 14px;
+            color: #64748b;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        canvas {
+            max-height: 400px;
         }
         
         .status-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 20px;
         }
         
         .status-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
+            background: rgba(30, 41, 59, 0.5);
+            padding: 25px;
+            border-radius: 12px;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        
+        .status-card:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-3px);
         }
         
         .status-icon {
-            font-size: 30px;
-            margin-bottom: 10px;
+            font-size: 36px;
+            margin-bottom: 12px;
         }
         
         .status-count {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
         
         .status-label {
-            font-size: 12px;
-            color: #666;
+            font-size: 13px;
+            color: #94a3b8;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .status-card.concluido .status-count {
-            color: #10b981;
+        .insights-section {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            margin-bottom: 30px;
         }
         
-        .status-card.andamento .status-count {
+        .insights-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #e2e8f0;
+        }
+        
+        .insight-block {
+            margin-bottom: 25px;
+        }
+        
+        .insight-block h3 {
+            font-size: 16px;
+            color: #60a5fa;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .insight-block ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .insight-block li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        
+        .insight-block li::before {
+            content: '▸';
+            position: absolute;
+            left: 10px;
             color: #3b82f6;
-        }
-        
-        .status-card.cancelado .status-count {
-            color: #ef4444;
-        }
-        
-        .status-card.nao-iniciado .status-count {
-            color: #f59e0b;
-        }
-        
-        .timeline {
-            margin-top: 20px;
-        }
-        
-        .timeline-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .timeline-date {
-            min-width: 100px;
             font-weight: bold;
-            color: #667eea;
         }
         
-        .timeline-bar {
-            flex: 1;
-            height: 40px;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
-        }
-        
-        .okr-history {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        
-        .okr-month {
+        .footer {
             text-align: center;
-            flex: 1;
-            padding: 15px;
-            background: #f9fafb;
-            border-radius: 10px;
-            margin: 0 5px;
-        }
-        
-        .okr-month .month {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .okr-month .value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 5px;
-        }
-        
-        .okr-month .percent {
+            padding: 30px;
+            color: #64748b;
             font-size: 14px;
-            color: #10b981;
         }
         
-        .okr-month.current {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .okr-month.current .month,
-        .okr-month.current .value,
-        .okr-month.current .percent {
-            color: white;
-        }
-        
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        @media (max-width: 768px) {
-            .grid-2 {
+        @media (max-width: 1200px) {
+            .grid-2, .grid-3 {
                 grid-template-columns: 1fr;
             }
             
             .status-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            .okr-history {
-                flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
             }
             
-            .okr-month {
-                flex-basis: 48%;
-                margin-bottom: 10px;
+            .header-right {
+                text-align: center;
+                margin-top: 20px;
             }
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-left: 10px;
-        }
-        
-        .badge.success {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        
-        .badge.warning {
-            background: #fed7aa;
-            color: #92400e;
+            
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <h1>📊 Dashboard Suporte SOPS</h1>
-            <div class="subtitle">Período: 02/02/2026 a 06/02/2026 | Atualizado em: 06/02/2026 18:10</div>
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>📊 Dashboard Executiva - Suporte SOPS</h1>
+                    <div class="period">Período: Fevereiro/2026 (02/02 a 06/02)</div>
+                </div>
+                <div class="header-right">
+                    <div class="update-time">Atualizado: 06/02/2026 18:10</div>
+                    <div class="gabriel-logo">Gabriel Tecnologia</div>
+                </div>
+            </div>
         </div>
         
-        <!-- Métricas Principais -->
-        <div class="metrics-grid">
-            <div class="metric-card success">
-                <div class="label">Total de Chamados</div>
-                <div class="value">36</div>
-                <div class="subtitle">4 dias úteis monitorados</div>
+        <!-- KPIs Principais -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon">📞</div>
+                <div class="kpi-label">Total de Chamados</div>
+                <div class="kpi-value">36</div>
+                <div class="kpi-subtitle">4 dias úteis monitorados</div>
             </div>
             
-            <div class="metric-card success">
-                <div class="label">Taxa de Conclusão</div>
-                <div class="value">80,6%</div>
-                <div class="subtitle">29 chamados concluídos</div>
+            <div class="kpi-card">
+                <div class="kpi-icon">✅</div>
+                <div class="kpi-label">Taxa de Conclusão</div>
+                <div class="kpi-value">80,6%</div>
+                <div class="kpi-subtitle">29 chamados finalizados</div>
+                <span class="kpi-badge badge-success">Acima de 75%</span>
             </div>
             
-            <div class="metric-card info">
-                <div class="label">Média por Dia</div>
-                <div class="value">9,5</div>
-                <div class="subtitle">chamados/dia útil</div>
+            <div class="kpi-card">
+                <div class="kpi-icon">📈</div>
+                <div class="kpi-label">Média Diária</div>
+                <div class="kpi-value">9,5</div>
+                <div class="kpi-subtitle">chamados por dia útil</div>
             </div>
             
-            <div class="metric-card success">
-                <div class="label">OKR4 Atual</div>
-                <div class="value">0,68</div>
-                <div class="subtitle">Meta: 3,20 (471% atingimento) 🎯</div>
+            <div class="kpi-card">
+                <div class="kpi-icon">🎯</div>
+                <div class="kpi-label">OKR4 - Chamados/HC</div>
+                <div class="kpi-value">0,68</div>
+                <div class="kpi-subtitle">Meta: 3,20</div>
+                <span class="kpi-badge badge-success">471% de atingimento</span>
             </div>
         </div>
         
         <!-- Status dos Chamados -->
         <div class="chart-container">
-            <div class="chart-title">📈 Status dos Chamados</div>
+            <div class="chart-header">
+                <div>
+                    <div class="chart-title">Status dos Chamados</div>
+                    <div class="chart-subtitle">Distribuição atual do período</div>
+                </div>
+            </div>
             <div class="status-grid">
-                <div class="status-card concluido">
+                <div class="status-card">
                     <div class="status-icon">✅</div>
-                    <div class="status-count">29</div>
+                    <div class="status-count" style="color: #22c55e;">29</div>
                     <div class="status-label">Concluídos (80,6%)</div>
                 </div>
-                <div class="status-card andamento">
+                <div class="status-card">
                     <div class="status-icon">🔄</div>
-                    <div class="status-count">4</div>
+                    <div class="status-count" style="color: #3b82f6;">4</div>
                     <div class="status-label">Em Andamento (11,1%)</div>
                 </div>
-                <div class="status-card cancelado">
+                <div class="status-card">
                     <div class="status-icon">❌</div>
-                    <div class="status-count">2</div>
+                    <div class="status-count" style="color: #ef4444;">2</div>
                     <div class="status-label">Cancelados (5,6%)</div>
                 </div>
-                <div class="status-card nao-iniciado">
+                <div class="status-card">
                     <div class="status-icon">📋</div>
-                    <div class="status-count">1</div>
+                    <div class="status-count" style="color: #f59e0b;">1</div>
                     <div class="status-label">Não Iniciado (2,8%)</div>
                 </div>
             </div>
         </div>
         
-        <!-- Grid 2 Colunas -->
+        <!-- Gráficos de Volume e OKR -->
         <div class="grid-2">
-            <!-- Divisão por Área -->
+            <!-- Volume Histórico Mensal -->
             <div class="chart-container">
-                <div class="chart-title">🎯 Divisão por Área</div>
-                <div class="bar-chart">
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Comercial</span>
-                            <span>21 (58,3%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 58.3%;">58,3%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Pré-Vendas</span>
-                            <span>10 (27,8%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 27.8%;">27,8%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Central</span>
-                            <span>5 (13,9%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 13.9%;">13,9%</div>
-                        </div>
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Volume de Chamados - Histórico</div>
+                        <div class="chart-subtitle">Últimos 6 meses</div>
                     </div>
                 </div>
+                <canvas id="volumeChart"></canvas>
             </div>
             
-            <!-- Sistema -->
+            <!-- OKR Histórico -->
             <div class="chart-container">
-                <div class="chart-title">💻 Por Sistema</div>
-                <div class="bar-chart">
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>HubSpot 🔶</span>
-                            <span>32 (88,9%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 88.9%;">88,9%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>ClickSign 📝</span>
-                            <span>2 (5,6%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 5.6%;">5,6%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Airtable 📊</span>
-                            <span>2 (5,6%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 5.6%;">5,6%</div>
-                        </div>
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Performance OKR4 - Histórico</div>
+                        <div class="chart-subtitle">Meta: 3,20 chamados/HC</div>
                     </div>
                 </div>
+                <canvas id="okrChart"></canvas>
             </div>
         </div>
         
-        <!-- Top Motivos -->
-        <div class="chart-container">
-            <div class="chart-title">🔍 Top 5 Motivos de Abertura</div>
-            <div class="bar-chart">
-                <div class="bar-item">
-                    <div class="bar-label">
-                        <span>📋 Contratos</span>
-                        <span>8 (22,2%)</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: 22.2%;">22,2%</div>
+        <!-- Gráficos de Análise -->
+        <div class="grid-3">
+            <!-- Por Área -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Por Área</div>
+                        <div class="chart-subtitle">Distribuição de chamados</div>
                     </div>
                 </div>
-                
-                <div class="bar-item">
-                    <div class="bar-label">
-                        <span>⚙️ Pipeline & Automações</span>
-                        <span>6 (16,7%)</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: 16.7%;">16,7%</div>
-                    </div>
-                </div>
-                
-                <div class="bar-item">
-                    <div class="bar-label">
-                        <span>🔗 Integração Airtable</span>
-                        <span>4 (11,1%)</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: 11.1%;">11,1%</div>
+                <canvas id="areaChart"></canvas>
+            </div>
+            
+            <!-- Por Sistema -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Por Sistema</div>
+                        <div class="chart-subtitle">Plataformas utilizadas</div>
                     </div>
                 </div>
-                
-                <div class="bar-item">
-                    <div class="bar-label">
-                        <span>🔐 Permissões</span>
-                        <span>4 (11,1%)</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: 11.1%;">11,1%</div>
-                    </div>
-                </div>
-                
-                <div class="bar-item">
-                    <div class="bar-label">
-                        <span>📍 Endereço/CEP/Local</span>
-                        <span>4 (11,1%)</span>
-                    </div>
-                    <div class="bar-bg">
-                        <div class="bar-fill" style="width: 11.1%;">11,1%</div>
+                <canvas id="sistemaChart"></canvas>
+            </div>
+            
+            <!-- Timeline Diária -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Timeline Diária</div>
+                        <div class="chart-subtitle">Chamados por dia</div>
                     </div>
                 </div>
+                <canvas id="timelineChart"></canvas>
             </div>
         </div>
         
-        <!-- Grid 2 Colunas -->
+        <!-- Motivos e Pessoas -->
         <div class="grid-2">
+            <!-- Top Motivos -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Top 5 Motivos de Abertura</div>
+                        <div class="chart-subtitle">Principais demandas</div>
+                    </div>
+                </div>
+                <canvas id="motivosChart"></canvas>
+            </div>
+            
             <!-- Top Solicitantes -->
             <div class="chart-container">
-                <div class="chart-title">👥 Top 5 Solicitantes</div>
-                <div class="bar-chart">
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Luiz Pellegrini</span>
-                            <span>4 (11,1%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 11.1%;">11,1%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Eduarda Barros</span>
-                            <span>4 (11,1%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 11.1%;">11,1%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Caio Almeida</span>
-                            <span>4 (11,1%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 11.1%;">11,1%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Sacha Jagoda</span>
-                            <span>3 (8,3%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 8.3%;">8,3%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Rodrigo Moura</span>
-                            <span>3 (8,3%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 8.3%;">8,3%</div>
-                        </div>
+                <div class="chart-header">
+                    <div>
+                        <div class="chart-title">Top 5 Solicitantes</div>
+                        <div class="chart-subtitle">Maiores demandantes</div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Analistas SOPS -->
-            <div class="chart-container">
-                <div class="chart-title">🎯 Chamados por Analista SOPS</div>
-                <div class="bar-chart">
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Eduardo Abreu</span>
-                            <span>11 (30,6%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 30.6%;">30,6%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Guilherme Kenji</span>
-                            <span>9 (25,0%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 25%;">25,0%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Patrick Cruz</span>
-                            <span>8 (22,2%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 22.2%;">22,2%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Lucas Amim</span>
-                            <span>5 (13,9%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 13.9%;">13,9%</div>
-                        </div>
-                    </div>
-                    
-                    <div class="bar-item">
-                        <div class="bar-label">
-                            <span>Gabriel Barcellos</span>
-                            <span>2 (5,6%)</span>
-                        </div>
-                        <div class="bar-bg">
-                            <div class="bar-fill" style="width: 5.6%;">5,6%</div>
-                        </div>
-                    </div>
-                </div>
+                <canvas id="solicitantesChart"></canvas>
             </div>
         </div>
         
-        <!-- Timeline de Chamados por Dia -->
+        <!-- Analistas -->
         <div class="chart-container">
-            <div class="chart-title">📅 Chamados por Dia</div>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">02/02/26</div>
-                    <div class="timeline-bar" style="width: calc(5 * 40px);">
-                        5 chamados (13,9%)
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-date">03/02/26</div>
-                    <div class="timeline-bar" style="width: calc(10 * 40px);">
-                        10 chamados (27,8%)
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-date">04/02/26</div>
-                    <div class="timeline-bar" style="width: calc(7 * 40px);">
-                        7 chamados (19,4%)
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-date">05/02/26</div>
-                    <div class="timeline-bar" style="width: calc(9 * 40px);">
-                        9 chamados (25,0%)
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-date">06/02/26</div>
-                    <div class="timeline-bar" style="width: calc(5 * 40px);">
-                        5 chamados (13,9%)
-                    </div>
+            <div class="chart-header">
+                <div>
+                    <div class="chart-title">Performance dos Analistas SOPS</div>
+                    <div class="chart-subtitle">Distribuição de atendimentos</div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Histórico OKR -->
-        <div class="chart-container">
-            <div class="chart-title">📊 Histórico OKR - Últimos 5 Meses <span class="badge success">Meta: 3,20</span></div>
-            <div class="okr-history">
-                <div class="okr-month">
-                    <div class="month">OUT/25</div>
-                    <div class="value">6,66</div>
-                    <div class="percent">48%</div>
-                </div>
-                
-                <div class="okr-month">
-                    <div class="month">NOV/25</div>
-                    <div class="value">4,56</div>
-                    <div class="percent">70%</div>
-                </div>
-                
-                <div class="okr-month">
-                    <div class="month">DEZ/25</div>
-                    <div class="value">4,03</div>
-                    <div class="percent">79%</div>
-                </div>
-                
-                <div class="okr-month">
-                    <div class="month">JAN/26</div>
-                    <div class="value">3,21</div>
-                    <div class="percent">99,8%</div>
-                </div>
-                
-                <div class="okr-month current">
-                    <div class="month">FEV/26 🎯</div>
-                    <div class="value">0,68</div>
-                    <div class="percent">471%</div>
-                </div>
-            </div>
+            <canvas id="analistasChart"></canvas>
         </div>
         
         <!-- Insights -->
-        <div class="chart-container">
-            <div class="chart-title">💡 Insights & Destaques</div>
-            <div style="line-height: 1.8; color: #333;">
-                <p style="margin-bottom: 15px;"><strong>✅ Pontos Positivos:</strong></p>
-                <ul style="margin-left: 20px; margin-bottom: 20px;">
-                    <li>Métrica OKR parcial excelente: 0,68 chamados/HC (471% da meta!) 🎯</li>
+        <div class="insights-section">
+            <div class="insights-title">💡 Insights & Destaques - Fevereiro 2026</div>
+            
+            <div class="insight-block">
+                <h3>✅ Pontos Positivos</h3>
+                <ul>
+                    <li>Métrica OKR parcial excelente: 0,68 chamados/HC (471% da meta!)</li>
                     <li>Novo referencial HC de 53 implementado com sucesso (era 39,5 em 2025)</li>
-                    <li>Taxa de conclusão sólida: 80,6% dos chamados já concluídos</li>
+                    <li>Taxa de conclusão sólida: 80,6% dos chamados já resolvidos</li>
                     <li>Baixo índice de cancelamentos: apenas 5,6%</li>
                     <li>Distribuição equilibrada entre analistas Eduardo, Patrick e Kenji</li>
                     <li>Volume controlado: ~9,5 chamados/dia útil</li>
                 </ul>
-                
-                <p style="margin-bottom: 15px;"><strong>⚠️ Pontos de Atenção:</strong></p>
-                <ul style="margin-left: 20px; margin-bottom: 20px;">
-                    <li>Período parcial (apenas 4 dias úteis - 03 a 06/02)</li>
-                    <li>4 chamados em andamento (11,1%) + 1 não iniciado</li>
+            </div>
+            
+            <div class="insight-block">
+                <h3>⚠️ Pontos de Atenção</h3>
+                <ul>
+                    <li>Período parcial (apenas 4 dias úteis - 03 a 06/02) - dados não representam mês completo</li>
+                    <li>4 chamados em andamento (11,1%) + 1 não iniciado necessitam acompanhamento</li>
                     <li>Contratos voltou a ser o principal motivo (22,2%)</li>
-                </ul>
-                
-                <p style="margin-bottom: 15px;"><strong>📊 Projeção para Fevereiro Completo:</strong></p>
-                <ul style="margin-left: 20px;">
-                    <li>Mantendo média atual: ~190 chamados no mês total</li>
-                    <li>Projeção base OKR fim do mês: ~160 chamados (comercial + pré-vendas)</li>
-                    <li>Projeção OKR fim do mês: ~3,02 chamados/HC (94% da meta) ✅</li>
+                    <li>HubSpot representa 88,9% dos sistemas - alta dependência</li>
                 </ul>
             </div>
+            
+            <div class="insight-block">
+                <h3>📊 Projeção para Fevereiro Completo</h3>
+                <ul>
+                    <li>Mantendo média atual: ~190 chamados estimados para o mês completo</li>
+                    <li>Projeção base OKR fim do mês: ~160 chamados (comercial + pré-vendas)</li>
+                    <li>Projeção OKR fim do mês: ~3,02 chamados/HC (94% da meta) ✅</li>
+                    <li>Expectativa de manter tendência positiva observada em janeiro</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p>Dashboard Suporte SOPS | Gabriel Tecnologia © 2026</p>
+            <p style="margin-top: 10px; font-size: 12px;">Para atualizar os dados, envie o CSV atualizado da aba 02/2026</p>
         </div>
     </div>
     
     <script>
-        // Animação de entrada das barras
-        window.addEventListener('load', function() {
-            const bars = document.querySelectorAll('.bar-fill');
-            bars.forEach(bar => {
-                const width = bar.style.width;
-                bar.style.width = '0';
-                setTimeout(() => {
-                    bar.style.width = width;
-                }, 100);
-            });
+        // Configuração global dos gráficos
+        Chart.defaults.color = '#cbd5e1';
+        Chart.defaults.borderColor = '#334155';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        
+        // Cores padrão
+        const colors = {
+            primary: '#3b82f6',
+            secondary: '#60a5fa',
+            success: '#22c55e',
+            warning: '#f59e0b',
+            danger: '#ef4444',
+            purple: '#a855f7',
+            cyan: '#06b6d4'
+        };
+        
+        // Gráfico de Volume Histórico
+        const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+        new Chart(volumeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'],
+                datasets: [{
+                    label: 'Chamados',
+                    data: [175, 263, 180, 159, 170, 36],
+                    backgroundColor: colors.primary,
+                    borderRadius: 8,
+                    barThickness: 60
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        titleColor: '#e2e8f0',
+                        bodyColor: '#cbd5e1',
+                        borderColor: '#334155',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#334155'
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico OKR Histórico
+        const okrCtx = document.getElementById('okrChart').getContext('2d');
+        new Chart(okrCtx, {
+            type: 'line',
+            data: {
+                labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'],
+                datasets: [
+                    {
+                        label: 'OKR4',
+                        data: [4.43, 6.66, 4.56, 4.03, 3.21, 0.68],
+                        borderColor: colors.primary,
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    },
+                    {
+                        label: 'Meta (3,20)',
+                        data: [3.20, 3.20, 3.20, 3.20, 3.20, 3.20],
+                        borderColor: colors.danger,
+                        borderDash: [5, 5],
+                        borderWidth: 2,
+                        pointRadius: 0,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            color: '#cbd5e1',
+                            usePointStyle: true,
+                            padding: 15
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        titleColor: '#e2e8f0',
+                        bodyColor: '#cbd5e1',
+                        borderColor: '#334155',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#334155'
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico Por Área
+        const areaCtx = document.getElementById('areaChart').getContext('2d');
+        new Chart(areaCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Comercial', 'Pré-Vendas', 'Central'],
+                datasets: [{
+                    data: [21, 10, 5],
+                    backgroundColor: [colors.primary, colors.secondary, colors.cyan],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#cbd5e1',
+                            padding: 15,
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        titleColor: '#e2e8f0',
+                        bodyColor: '#cbd5e1',
+                        borderColor: '#334155',
+                        borderWidth: 1
+                    }
+                }
+            }
+        });
+        
+        // Gráfico Por Sistema
+        const sistemaCtx = document.getElementById('sistemaChart').getContext('2d');
+        new Chart(sistemaCtx, {
+            type: 'pie',
+            data: {
+                labels: ['HubSpot', 'ClickSign', 'Airtable'],
+                datasets: [{
+                    data: [32, 2, 2],
+                    backgroundColor: [colors.warning, colors.danger, colors.success],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#cbd5e1',
+                            padding: 15,
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        titleColor: '#e2e8f0',
+                        bodyColor: '#cbd5e1',
+                        borderColor: '#334155',
+                        borderWidth: 1
+                    }
+                }
+            }
+        });
+        
+        // Gráfico Timeline Diária
+        const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+        new Chart(timelineCtx, {
+            type: 'bar',
+            data: {
+                labels: ['02/02', '03/02', '04/02', '05/02', '06/02'],
+                datasets: [{
+                    label: 'Chamados',
+                    data: [5, 10, 7, 9, 5],
+                    backgroundColor: colors.secondary,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        titleColor: '#e2e8f0',
+                        bodyColor: '#cbd5e1',
+                        borderColor: '#334155',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#334155'
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico Top Motivos
+        const motivosCtx = document.getElementById('motivosChart').getContext('2d');
+        new Chart(motivosCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Contratos', 'Pipeline', 'Airtable', 'Permissões', 'Endereço'],
+                datasets: [{
+                    label: 'Chamados',
+                    data: [8, 6, 4, 4, 4],
+                    backgroundColor: [
+                        colors.primary,
+                        colors.secondary,
+                        colors.success,
+                        colors.warning,
+                        colors.purple
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        titleColor: '#e2e8f0',
+                        bodyColor: '#cbd5e1',
+                        borderColor: '#334155',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#334155'
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico Top Solicitantes
+        const solicitantesCtx = document.getElementById('solicitantesChart').getContext('2d');
+        new Chart(solicitantesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['L. Pellegrini', 'E. Barros', 'C. Almeida', 'S. Jagoda', 'R. Moura'],
+                datasets: [{
+                    label: 'Chamados',
+                    data: [4, 4, 4, 3, 3],
+                    backgroundColor: colors.cyan,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        titleColor: '#e2e8f0',
+                        bodyColor: '#cbd5e1',
+                        borderColor: '#334155',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#334155'
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico Analistas
+        const analistasCtx = document.getElementById('analistasChart').getContext('2d');
+        new Chart(analistasCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Eduardo Abreu', 'Guilherme Kenji', 'Patrick Cruz', 'Lucas Amim', 'Gabriel Barcellos', 'Diego Pace'],
+                datasets: [{
+                    label: 'Chamados Atendidos',
+                    data: [11, 9, 8, 5, 2, 1],
+                    backgroundColor: colors.primary,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        titleColor: '#e2e8f0',
+                        bodyColor: '#cbd5e1',
+                        borderColor: '#334155',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#334155'
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#94a3b8'
+                        }
+                    }
+                }
+            }
         });
     </script>
 </body>
