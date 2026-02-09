@@ -6,965 +6,120 @@
     <title>Dashboard Executiva - Suporte SOPS</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f172a;
-            color: #e2e8f0;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            padding: 40px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            border: 1px solid #334155;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .header-left h1 {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #60a5fa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .header-left .period {
-            color: #94a3b8;
-            font-size: 16px;
-        }
-        
-        .header-right {
-            text-align: right;
-        }
-        
-        .header-right .update-time {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-        
-        .header-right .gabriel-logo {
-            color: #60a5fa;
-            font-size: 24px;
-            font-weight: 700;
-        }
-        
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .kpi-card {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            padding: 30px;
-            border-radius: 16px;
-            border: 1px solid #334155;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-        
-        .kpi-card:hover {
-            transform: translateY(-5px);
-            border-color: #3b82f6;
-        }
-        
-        .kpi-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #3b82f6, #60a5fa);
-        }
-        
-        .kpi-icon {
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
-        
-        .kpi-label {
-            font-size: 13px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .kpi-value {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            background: linear-gradient(135deg, #60a5fa, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .kpi-subtitle {
-            font-size: 14px;
-            color: #64748b;
-        }
-        
-        .kpi-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 8px;
-        }
-        
-        .badge-success {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-        }
-        
-        .badge-warning {
-            background: rgba(251, 146, 60, 0.2);
-            color: #fb923c;
-        }
-        
-        .chart-container {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            padding: 30px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            border: 1px solid #334155;
-        }
-        
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #334155;
-        }
-        
-        .chart-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #e2e8f0;
-        }
-        
-        .chart-subtitle {
-            font-size: 14px;
-            color: #64748b;
-        }
-        
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        
-        canvas {
-            max-height: 400px;
-        }
-        
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        
-        .status-card {
-            background: rgba(30, 41, 59, 0.5);
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid #334155;
-            transition: all 0.3s ease;
-        }
-        
-        .status-card:hover {
-            background: rgba(30, 41, 59, 0.8);
-            transform: translateY(-3px);
-        }
-        
-        .status-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
-        }
-        
-        .status-count {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        
-        .status-label {
-            font-size: 13px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .insights-section {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            padding: 35px;
-            border-radius: 16px;
-            border: 1px solid #334155;
-            margin-bottom: 30px;
-        }
-        
-        .insights-title {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            color: #e2e8f0;
-        }
-        
-        .insight-block {
-            margin-bottom: 25px;
-        }
-        
-        .insight-block h3 {
-            font-size: 16px;
-            color: #60a5fa;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .insight-block ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .insight-block li {
-            padding: 10px 0;
-            padding-left: 30px;
-            position: relative;
-            color: #cbd5e1;
-            line-height: 1.6;
-        }
-        
-        .insight-block li::before {
-            content: '▸';
-            position: absolute;
-            left: 10px;
-            color: #3b82f6;
-            font-weight: bold;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 30px;
-            color: #64748b;
-            font-size: 14px;
-        }
-        
-        @media (max-width: 1200px) {
-            .grid-2, .grid-3 {
-                grid-template-columns: 1fr;
-            }
-            
-            .status-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .header-right {
-                text-align: center;
-                margin-top: 20px;
-            }
-            
-            .kpi-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .status-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; padding: 20px; }
+        .container { max-width: 1600px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 40px; border-radius: 20px; margin-bottom: 30px; border: 1px solid #334155; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .header-left h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; background: linear-gradient(135deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header-left .period { color: #94a3b8; font-size: 16px; }
+        .header-right { text-align: right; }
+        .header-right .update-time { color: #94a3b8; font-size: 14px; margin-bottom: 10px; }
+        .header-right .gabriel-logo { color: #60a5fa; font-size: 24px; font-weight: 700; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .kpi-card { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 30px; border-radius: 16px; border: 1px solid #334155; position: relative; overflow: hidden; transition: transform 0.3s ease; }
+        .kpi-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
+        .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .kpi-icon { font-size: 32px; margin-bottom: 15px; }
+        .kpi-label { font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight: 600; }
+        .kpi-value { font-size: 42px; font-weight: 700; margin-bottom: 8px; background: linear-gradient(135deg, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .kpi-subtitle { font-size: 14px; color: #64748b; }
+        .kpi-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-top: 8px; }
+        .badge-success { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .chart-container { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 30px; border-radius: 16px; margin-bottom: 30px; border: 1px solid #334155; }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #334155; }
+        .chart-title { font-size: 20px; font-weight: 700; color: #e2e8f0; }
+        .chart-subtitle { font-size: 14px; color: #64748b; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 30px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 30px; }
+        canvas { max-height: 400px; }
+        .status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .status-card { background: rgba(30, 41, 59, 0.5); padding: 25px; border-radius: 12px; text-align: center; border: 1px solid #334155; transition: all 0.3s ease; }
+        .status-card:hover { background: rgba(30, 41, 59, 0.8); transform: translateY(-3px); }
+        .status-icon { font-size: 36px; margin-bottom: 12px; }
+        .status-count { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
+        .status-label { font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .insights-section { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 35px; border-radius: 16px; border: 1px solid #334155; margin-bottom: 30px; }
+        .insights-title { font-size: 22px; font-weight: 700; margin-bottom: 25px; color: #e2e8f0; }
+        .insight-block { margin-bottom: 25px; }
+        .insight-block h3 { font-size: 16px; color: #60a5fa; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .insight-block ul { list-style: none; padding-left: 0; }
+        .insight-block li { padding: 10px 0; padding-left: 30px; position: relative; color: #cbd5e1; line-height: 1.6; }
+        .insight-block li::before { content: '?'; position: absolute; left: 10px; color: #3b82f6; font-weight: bold; }
+        .footer { text-align: center; padding: 30px; color: #64748b; font-size: 14px; }
+        @media (max-width: 1200px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } .status-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .header-content { flex-direction: column; text-align: center; } .header-right { text-align: center; margin-top: 20px; } .kpi-grid { grid-template-columns: 1fr; } .status-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="header-content">
                 <div class="header-left">
-                    <h1>📊 Dashboard Executiva - Suporte SOPS</h1>
-                    <div class="period">Período: Fevereiro/2026 (02/02 a 06/02)</div>
+                    <h1>? Dashboard Executiva - Suporte SOPS</h1>
+                    <div class="period">Per?odo: 02/2026</div>
                 </div>
                 <div class="header-right">
-                    <div class="update-time">Atualizado: 06/02/2026 18:10</div>
+                    <div class="update-time">Atualizado: 09/02/2026 11:38</div>
                     <div class="gabriel-logo">Gabriel Tecnologia</div>
                 </div>
             </div>
         </div>
         
-        <!-- KPIs Principais -->
         <div class="kpi-grid">
             <div class="kpi-card">
-                <div class="kpi-icon">📞</div>
+                <div class="kpi-icon">?</div>
                 <div class="kpi-label">Total de Chamados</div>
-                <div class="kpi-value">36</div>
-                <div class="kpi-subtitle">4 dias úteis monitorados</div>
+                <div class="kpi-value">40</div>
+                <div class="kpi-subtitle">6 dias ?teis monitorados</div>
             </div>
-            
             <div class="kpi-card">
-                <div class="kpi-icon">✅</div>
-                <div class="kpi-label">Taxa de Conclusão</div>
-                <div class="kpi-value">80,6%</div>
-                <div class="kpi-subtitle">29 chamados finalizados</div>
+                <div class="kpi-icon">?</div>
+                <div class="kpi-label">Taxa de Conclus?o</div>
+                <div class="kpi-value">85.0%</div>
+                <div class="kpi-subtitle">34 chamados finalizados</div>
                 <span class="kpi-badge badge-success">Acima de 75%</span>
             </div>
-            
             <div class="kpi-card">
-                <div class="kpi-icon">📈</div>
-                <div class="kpi-label">Média Diária</div>
-                <div class="kpi-value">9,5</div>
-                <div class="kpi-subtitle">chamados por dia útil</div>
+                <div class="kpi-icon">?</div>
+                <div class="kpi-label">M?dia Di?ria</div>
+                <div class="kpi-value">6.7</div>
+                <div class="kpi-subtitle">chamados por dia ?til</div>
             </div>
-            
             <div class="kpi-card">
-                <div class="kpi-icon">🎯</div>
+                <div class="kpi-icon">?</div>
                 <div class="kpi-label">OKR4 - Chamados/HC</div>
-                <div class="kpi-value">0,68</div>
+                <div class="kpi-value">0.64</div>
                 <div class="kpi-subtitle">Meta: 3,20</div>
-                <span class="kpi-badge badge-success">471% de atingimento</span>
+                <span class="kpi-badge badge-success">500% de atingimento</span>
             </div>
         </div>
         
-        <!-- Status dos Chamados -->
         <div class="chart-container">
             <div class="chart-header">
-                <div>
-                    <div class="chart-title">Status dos Chamados</div>
-                    <div class="chart-subtitle">Distribuição atual do período</div>
-                </div>
+                <div><div class="chart-title">Status dos Chamados</div><div class="chart-subtitle">Distribui??o atual do per?odo</div></div>
             </div>
             <div class="status-grid">
-                <div class="status-card">
-                    <div class="status-icon">✅</div>
-                    <div class="status-count" style="color: #22c55e;">29</div>
-                    <div class="status-label">Concluídos (80,6%)</div>
-                </div>
-                <div class="status-card">
-                    <div class="status-icon">🔄</div>
-                    <div class="status-count" style="color: #3b82f6;">4</div>
-                    <div class="status-label">Em Andamento (11,1%)</div>
-                </div>
-                <div class="status-card">
-                    <div class="status-icon">❌</div>
-                    <div class="status-count" style="color: #ef4444;">2</div>
-                    <div class="status-label">Cancelados (5,6%)</div>
-                </div>
-                <div class="status-card">
-                    <div class="status-icon">📋</div>
-                    <div class="status-count" style="color: #f59e0b;">1</div>
-                    <div class="status-label">Não Iniciado (2,8%)</div>
-                </div>
+                <div class="status-card"><div class="status-icon">?</div><div class="status-count" style="color: #22c55e;">34</div><div class="status-label">Conclu?dos (85.0%)</div></div>
+                <div class="status-card"><div class="status-icon">?</div><div class="status-count" style="color: #3b82f6;">3</div><div class="status-label">Em Andamento</div></div>
+                <div class="status-card"><div class="status-icon">?</div><div class="status-count" style="color: #ef4444;">2</div><div class="status-label">Cancelados</div></div>
+                <div class="status-card"><div class="status-icon">?</div><div class="status-count" style="color: #f59e0b;">1</div><div class="status-label">N?o Iniciado</div></div>
             </div>
         </div>
         
-        <!-- Gráficos de Volume e OKR -->
-        <div class="grid-2">
-            <!-- Volume Histórico Mensal -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">Volume de Chamados - Histórico</div>
-                        <div class="chart-subtitle">Últimos 6 meses</div>
-                    </div>
-                </div>
-                <canvas id="volumeChart"></canvas>
-            </div>
-            
-            <!-- OKR Histórico -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">Performance OKR4 - Histórico</div>
-                        <div class="chart-subtitle">Meta: 3,20 chamados/HC</div>
-                    </div>
-                </div>
-                <canvas id="okrChart"></canvas>
-            </div>
-        </div>
-        
-        <!-- Gráficos de Análise -->
-        <div class="grid-3">
-            <!-- Por Área -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">Por Área</div>
-                        <div class="chart-subtitle">Distribuição de chamados</div>
-                    </div>
-                </div>
-                <canvas id="areaChart"></canvas>
-            </div>
-            
-            <!-- Por Sistema -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">Por Sistema</div>
-                        <div class="chart-subtitle">Plataformas utilizadas</div>
-                    </div>
-                </div>
-                <canvas id="sistemaChart"></canvas>
-            </div>
-            
-            <!-- Timeline Diária -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">Timeline Diária</div>
-                        <div class="chart-subtitle">Chamados por dia</div>
-                    </div>
-                </div>
-                <canvas id="timelineChart"></canvas>
-            </div>
-        </div>
-        
-        <!-- Motivos e Pessoas -->
-        <div class="grid-2">
-            <!-- Top Motivos -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">Top 5 Motivos de Abertura</div>
-                        <div class="chart-subtitle">Principais demandas</div>
-                    </div>
-                </div>
-                <canvas id="motivosChart"></canvas>
-            </div>
-            
-            <!-- Top Solicitantes -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div>
-                        <div class="chart-title">Top 5 Solicitantes</div>
-                        <div class="chart-subtitle">Maiores demandantes</div>
-                    </div>
-                </div>
-                <canvas id="solicitantesChart"></canvas>
-            </div>
-        </div>
-        
-        <!-- Analistas -->
-        <div class="chart-container">
-            <div class="chart-header">
-                <div>
-                    <div class="chart-title">Performance dos Analistas SOPS</div>
-                    <div class="chart-subtitle">Distribuição de atendimentos</div>
-                </div>
-            </div>
-            <canvas id="analistasChart"></canvas>
-        </div>
-        
-        <!-- Insights -->
         <div class="insights-section">
-            <div class="insights-title">💡 Insights & Destaques - Fevereiro 2026</div>
-            
+            <div class="insights-title">? Insights & Destaques</div>
             <div class="insight-block">
-                <h3>✅ Pontos Positivos</h3>
+                <h3>? Pontos Positivos</h3>
                 <ul>
-                    <li>Métrica OKR parcial excelente: 0,68 chamados/HC (471% da meta!)</li>
-                    <li>Novo referencial HC de 53 implementado com sucesso (era 39,5 em 2025)</li>
-                    <li>Taxa de conclusão sólida: 80,6% dos chamados já resolvidos</li>
-                    <li>Baixo índice de cancelamentos: apenas 5,6%</li>
-                    <li>Distribuição equilibrada entre analistas Eduardo, Patrick e Kenji</li>
-                    <li>Volume controlado: ~9,5 chamados/dia útil</li>
-                </ul>
-            </div>
-            
-            <div class="insight-block">
-                <h3>⚠️ Pontos de Atenção</h3>
-                <ul>
-                    <li>Período parcial (apenas 4 dias úteis - 03 a 06/02) - dados não representam mês completo</li>
-                    <li>4 chamados em andamento (11,1%) + 1 não iniciado necessitam acompanhamento</li>
-                    <li>Contratos voltou a ser o principal motivo (22,2%)</li>
-                    <li>HubSpot representa 88,9% dos sistemas - alta dependência</li>
-                </ul>
-            </div>
-            
-            <div class="insight-block">
-                <h3>📊 Projeção para Fevereiro Completo</h3>
-                <ul>
-                    <li>Mantendo média atual: ~190 chamados estimados para o mês completo</li>
-                    <li>Projeção base OKR fim do mês: ~160 chamados (comercial + pré-vendas)</li>
-                    <li>Projeção OKR fim do mês: ~3,02 chamados/HC (94% da meta) ✅</li>
-                    <li>Expectativa de manter tendência positiva observada em janeiro</li>
+                    <li>M?trica OKR parcial: 0.64 chamados/HC (500% da meta!)</li>
+                    <li>Taxa de conclus?o: 85.0%</li>
+                    <li>Volume controlado: ~6.7 chamados/dia ?til</li>
                 </ul>
             </div>
         </div>
         
-        <!-- Footer -->
-        <div class="footer">
-            <p>Dashboard Suporte SOPS | Gabriel Tecnologia © 2026</p>
-            <p style="margin-top: 10px; font-size: 12px;">Para atualizar os dados, envie o CSV atualizado da aba 02/2026</p>
-        </div>
+        <div class="footer"><strong>Dashboard Suporte SOPS</strong> | Gabriel Tecnologia ? 2026<br>Atualizada automaticamente via Apps Script</div>
     </div>
-    
-    <script>
-        // Configuração global dos gráficos
-        Chart.defaults.color = '#cbd5e1';
-        Chart.defaults.borderColor = '#334155';
-        Chart.defaults.font.family = "'Inter', sans-serif";
-        
-        // Cores padrão
-        const colors = {
-            primary: '#3b82f6',
-            secondary: '#60a5fa',
-            success: '#22c55e',
-            warning: '#f59e0b',
-            danger: '#ef4444',
-            purple: '#a855f7',
-            cyan: '#06b6d4'
-        };
-        
-        // Gráfico de Volume Histórico
-        const volumeCtx = document.getElementById('volumeChart').getContext('2d');
-        new Chart(volumeCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'],
-                datasets: [{
-                    label: 'Chamados',
-                    data: [175, 263, 180, 159, 170, 36],
-                    backgroundColor: colors.primary,
-                    borderRadius: 8,
-                    barThickness: 60
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        titleColor: '#e2e8f0',
-                        bodyColor: '#cbd5e1',
-                        borderColor: '#334155',
-                        borderWidth: 1
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#334155'
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    }
-                }
-            }
-        });
-        
-        // Gráfico OKR Histórico
-        const okrCtx = document.getElementById('okrChart').getContext('2d');
-        new Chart(okrCtx, {
-            type: 'line',
-            data: {
-                labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'],
-                datasets: [
-                    {
-                        label: 'OKR4',
-                        data: [4.43, 6.66, 4.56, 4.03, 3.21, 0.68],
-                        borderColor: colors.primary,
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        tension: 0.4,
-                        fill: true,
-                        pointRadius: 6,
-                        pointHoverRadius: 8
-                    },
-                    {
-                        label: 'Meta (3,20)',
-                        data: [3.20, 3.20, 3.20, 3.20, 3.20, 3.20],
-                        borderColor: colors.danger,
-                        borderDash: [5, 5],
-                        borderWidth: 2,
-                        pointRadius: 0,
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            color: '#cbd5e1',
-                            usePointStyle: true,
-                            padding: 15
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        titleColor: '#e2e8f0',
-                        bodyColor: '#cbd5e1',
-                        borderColor: '#334155',
-                        borderWidth: 1
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#334155'
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    }
-                }
-            }
-        });
-        
-        // Gráfico Por Área
-        const areaCtx = document.getElementById('areaChart').getContext('2d');
-        new Chart(areaCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Comercial', 'Pré-Vendas', 'Central'],
-                datasets: [{
-                    data: [21, 10, 5],
-                    backgroundColor: [colors.primary, colors.secondary, colors.cyan],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: '#cbd5e1',
-                            padding: 15,
-                            usePointStyle: true
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        titleColor: '#e2e8f0',
-                        bodyColor: '#cbd5e1',
-                        borderColor: '#334155',
-                        borderWidth: 1
-                    }
-                }
-            }
-        });
-        
-        // Gráfico Por Sistema
-        const sistemaCtx = document.getElementById('sistemaChart').getContext('2d');
-        new Chart(sistemaCtx, {
-            type: 'pie',
-            data: {
-                labels: ['HubSpot', 'ClickSign', 'Airtable'],
-                datasets: [{
-                    data: [32, 2, 2],
-                    backgroundColor: [colors.warning, colors.danger, colors.success],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: '#cbd5e1',
-                            padding: 15,
-                            usePointStyle: true
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        titleColor: '#e2e8f0',
-                        bodyColor: '#cbd5e1',
-                        borderColor: '#334155',
-                        borderWidth: 1
-                    }
-                }
-            }
-        });
-        
-        // Gráfico Timeline Diária
-        const timelineCtx = document.getElementById('timelineChart').getContext('2d');
-        new Chart(timelineCtx, {
-            type: 'bar',
-            data: {
-                labels: ['02/02', '03/02', '04/02', '05/02', '06/02'],
-                datasets: [{
-                    label: 'Chamados',
-                    data: [5, 10, 7, 9, 5],
-                    backgroundColor: colors.secondary,
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        titleColor: '#e2e8f0',
-                        bodyColor: '#cbd5e1',
-                        borderColor: '#334155',
-                        borderWidth: 1
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#334155'
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    }
-                }
-            }
-        });
-        
-        // Gráfico Top Motivos
-        const motivosCtx = document.getElementById('motivosChart').getContext('2d');
-        new Chart(motivosCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Contratos', 'Pipeline', 'Airtable', 'Permissões', 'Endereço'],
-                datasets: [{
-                    label: 'Chamados',
-                    data: [8, 6, 4, 4, 4],
-                    backgroundColor: [
-                        colors.primary,
-                        colors.secondary,
-                        colors.success,
-                        colors.warning,
-                        colors.purple
-                    ],
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        titleColor: '#e2e8f0',
-                        bodyColor: '#cbd5e1',
-                        borderColor: '#334155',
-                        borderWidth: 1
-                    }
-                },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#334155'
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    },
-                    y: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    }
-                }
-            }
-        });
-        
-        // Gráfico Top Solicitantes
-        const solicitantesCtx = document.getElementById('solicitantesChart').getContext('2d');
-        new Chart(solicitantesCtx, {
-            type: 'bar',
-            data: {
-                labels: ['L. Pellegrini', 'E. Barros', 'C. Almeida', 'S. Jagoda', 'R. Moura'],
-                datasets: [{
-                    label: 'Chamados',
-                    data: [4, 4, 4, 3, 3],
-                    backgroundColor: colors.cyan,
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        titleColor: '#e2e8f0',
-                        bodyColor: '#cbd5e1',
-                        borderColor: '#334155',
-                        borderWidth: 1
-                    }
-                },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#334155'
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    },
-                    y: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    }
-                }
-            }
-        });
-        
-        // Gráfico Analistas
-        const analistasCtx = document.getElementById('analistasChart').getContext('2d');
-        new Chart(analistasCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Eduardo Abreu', 'Guilherme Kenji', 'Patrick Cruz', 'Lucas Amim', 'Gabriel Barcellos', 'Diego Pace'],
-                datasets: [{
-                    label: 'Chamados Atendidos',
-                    data: [11, 9, 8, 5, 2, 1],
-                    backgroundColor: colors.primary,
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#1e293b',
-                        padding: 12,
-                        titleColor: '#e2e8f0',
-                        bodyColor: '#cbd5e1',
-                        borderColor: '#334155',
-                        borderWidth: 1
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#334155'
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            color: '#94a3b8'
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
