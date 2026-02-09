@@ -57,7 +57,7 @@
         <div class="header"><div class="header-content">
             <div class="header-left"><h1>? Dashboard Executiva - Suporte SOPS</h1>
                 <div class="period">Per?odo: 02/2026</div></div>
-            <div class="header-right"><div class="update-time">Atualizado: 09/02/2026 13:45</div>
+            <div class="header-right"><div class="update-time">Atualizado: 09/02/2026 15:15</div>
                 <div class="gabriel-logo">Gabriel Tecnologia</div></div>
         </div></div>
         <div class="kpi-grid">
@@ -77,8 +77,8 @@
             <div class="kpi-card"><div class="kpi-icon">?</div>
                 <div class="kpi-label">OKR - Volume de Chamados</div>
                 <div class="kpi-value">41</div>
-                <div class="kpi-subtitle">Meta MTD: 46 de 152 (m?s completo)</div>
-                <span class="kpi-badge badge-warning">89.9% de atingimento MTD</span></div>
+                <div class="kpi-subtitle">Limite MTD: 46 de 152 (m?s completo)</div>
+                <span class="kpi-badge badge-success">5 chamados abaixo do limite</span></div>
         </div>
         <div class="chart-container"><div class="chart-header">
             <div><div class="chart-title">Status dos Chamados</div><div class="chart-subtitle">Distribui??o atual do per?odo</div></div></div>
@@ -91,7 +91,7 @@
         <div class="grid-2">
             <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Volume de Chamados - Hist?rico</div><div class="chart-subtitle">?ltimos 6 meses</div></div></div>
                 <canvas id="volumeChart"></canvas></div>
-            <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Performance OKR - Hist?rico</div><div class="chart-subtitle">Meta: 152 chamados/m?s</div></div></div>
+            <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Performance OKR - Hist?rico</div><div class="chart-subtitle">Limite: 152 chamados/m?s</div></div></div>
                 <canvas id="okrChart"></canvas></div>
         </div>
         <div class="grid-3">
@@ -113,11 +113,11 @@
         <div class="insights-section">
             <div class="insights-title">? Insights & Destaques - 02/2026</div>
             <div class="insight-block"><h3>? Pontos Positivos</h3><ul>
-                <li>Volume month-to-date: 41 chamados (89.9% da meta proporcional de 46)</li>
+                <li>Volume controlado: 41 chamados (5 abaixo do limite MTD de 46)</li>
                 <li>Taxa de conclus?o s?lida: 85.4% dos chamados j? resolvidos</li>
                 <li>Baixo ?ndice de cancelamentos: apenas 4.9%</li>
                 <li>Distribui??o equilibrada entre analistas</li>
-                <li>Volume controlado: ~6.8 chamados/dia ?til</li>
+                <li>M?dia controlada: ~6.8 chamados/dia ?til</li>
             </ul></div>
             <div class="insight-block"><h3>?? Pontos de Aten??o</h3><ul>
                 <li>Per?odo parcial (6 de 20 dias ?teis do m?s) - dados n?o representam m?s completo</li>
@@ -126,18 +126,17 @@
             </ul></div>
             <div class="insight-block"><h3>? Proje??o para Fevereiro Completo</h3><ul>
                 <li>Mantendo m?dia atual: ~137 chamados estimados para o m?s completo</li>
-                <li>Proje??o de atingimento: 90% da meta de 152 chamados</li>
-                <li>Expectativa de ficar abaixo da meta at? o fim do m?s</li>
+                <li>Margem projetada: 15 chamados ABAIXO do limite de 152</li>
+                <li>Expectativa de MANTER dentro do limite at? fim do m?s</li>
             </ul></div>
         </div>
-        <div class="footer"><strong>Dashboard Suporte SOPS</strong> | Gabriel Tecnologia ? 2026<br>
-            Atualizada automaticamente via Apps Script</div>
+        <div class="footer"><strong>Dashboard Suporte SOPS</strong> | Gabriel Tecnologia ? 2026<br>Atualizada automaticamente via Apps Script</div>
     </div>
     <script>
         const colors = { primary: '#3b82f6', secondary: '#8b5cf6', success: '#22c55e', warning: '#f59e0b', danger: '#ef4444', cyan: '#06b6d4', purple: '#a855f7' };
         Chart.defaults.color = '#94a3b8'; Chart.defaults.borderColor = '#334155';
         new Chart(document.getElementById('volumeChart').getContext('2d'), { type: 'line', data: { labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'], datasets: [{ label: 'Chamados', data: [175, 263, 180, 159, 170, 41], borderColor: colors.primary, backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: colors.primary }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
-        new Chart(document.getElementById('okrChart').getContext('2d'), { type: 'line', data: { labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'], datasets: [{ label: 'Volume', data: [175, 263, 180, 159, 170, 41], borderColor: colors.primary, backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: colors.primary }, { label: 'Meta (152)', data: [152, 152, 152, 152, 152, 152], borderColor: colors.danger, borderDash: [5, 5], pointRadius: 0, fill: false }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
+        new Chart(document.getElementById('okrChart').getContext('2d'), { type: 'line', data: { labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'], datasets: [{ label: 'Volume', data: [175, 263, 180, 159, 170, 41], borderColor: colors.primary, backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: colors.primary }, { label: 'Limite (152)', data: [152, 152, 152, 152, 152, 152], borderColor: colors.danger, borderDash: [5, 5], pointRadius: 0, fill: false }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
         new Chart(document.getElementById('areaChart').getContext('2d'), { type: 'doughnut', data: { labels: ['Comercial', 'Pr?-Vendas', 'Central'], datasets: [{ data: [24, 11, 6], backgroundColor: [colors.primary, colors.secondary, colors.cyan], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } } } });
         new Chart(document.getElementById('sistemaChart').getContext('2d'), { type: 'pie', data: { labels: ["Hubspot","Airtable","Clicksign"], datasets: [{ data: [35,4,2], backgroundColor: [colors.warning, colors.success, colors.danger], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } } } });
         new Chart(document.getElementById('timelineChart').getContext('2d'), { type: 'bar', data: { labels: ['02/02', '03/02', '04/02', '05/02', '06/02', '09/02'], datasets: [{ label: 'Chamados', data: [5, 10, 7, 9, 7, 2], backgroundColor: colors.secondary, borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
