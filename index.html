@@ -26,6 +26,7 @@
         .kpi-subtitle { font-size: 14px; color: #64748b; }
         .kpi-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-top: 8px; }
         .badge-success { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+        .badge-warning { background: rgba(251, 146, 60, 0.2); color: #fb923c; }
         .chart-container { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); padding: 30px; border-radius: 16px; margin-bottom: 30px; border: 1px solid #334155; }
         .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #334155; }
         .chart-title { font-size: 20px; font-weight: 700; color: #e2e8f0; }
@@ -53,246 +54,96 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="header-content">
-                <div class="header-left">
-                    <h1>? Dashboard Executiva - Suporte SOPS</h1>
-                    <div class="period">Per?odo: 02/2026</div>
-                </div>
-                <div class="header-right">
-                    <div class="update-time">Atualizado: 09/02/2026 11:52</div>
-                    <div class="gabriel-logo">Gabriel Tecnologia</div>
-                </div>
-            </div>
-        </div>
-        
+        <div class="header"><div class="header-content">
+            <div class="header-left"><h1>? Dashboard Executiva - Suporte SOPS</h1>
+                <div class="period">Per?odo: 02/2026</div></div>
+            <div class="header-right"><div class="update-time">Atualizado: 09/02/2026 13:45</div>
+                <div class="gabriel-logo">Gabriel Tecnologia</div></div>
+        </div></div>
         <div class="kpi-grid">
-            <div class="kpi-card">
-                <div class="kpi-icon">?</div>
+            <div class="kpi-card"><div class="kpi-icon">?</div>
                 <div class="kpi-label">Total de Chamados</div>
-                <div class="kpi-value">40</div>
-                <div class="kpi-subtitle">6 dias ?teis monitorados</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-icon">?</div>
+                <div class="kpi-value">41</div>
+                <div class="kpi-subtitle">6 dias ?teis monitorados</div></div>
+            <div class="kpi-card"><div class="kpi-icon">?</div>
                 <div class="kpi-label">Taxa de Conclus?o</div>
-                <div class="kpi-value">85.0%</div>
-                <div class="kpi-subtitle">34 chamados finalizados</div>
-                <span class="kpi-badge badge-success">Acima de 75%</span>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-icon">?</div>
+                <div class="kpi-value">85.4%</div>
+                <div class="kpi-subtitle">35 chamados finalizados</div>
+                <span class="kpi-badge badge-success">Acima de 75%</span></div>
+            <div class="kpi-card"><div class="kpi-icon">?</div>
                 <div class="kpi-label">M?dia Di?ria</div>
-                <div class="kpi-value">6.7</div>
-                <div class="kpi-subtitle">chamados por dia ?til</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-icon">?</div>
-                <div class="kpi-label">OKR4 - Chamados/HC</div>
-                <div class="kpi-value">0.64</div>
-                <div class="kpi-subtitle">Meta: 3,20</div>
-                <span class="kpi-badge badge-success">500% de atingimento</span>
-            </div>
+                <div class="kpi-value">6.8</div>
+                <div class="kpi-subtitle">chamados por dia ?til</div></div>
+            <div class="kpi-card"><div class="kpi-icon">?</div>
+                <div class="kpi-label">OKR - Volume de Chamados</div>
+                <div class="kpi-value">41</div>
+                <div class="kpi-subtitle">Meta MTD: 46 de 152 (m?s completo)</div>
+                <span class="kpi-badge badge-warning">89.9% de atingimento MTD</span></div>
         </div>
-        
-        <div class="chart-container">
-            <div class="chart-header">
-                <div><div class="chart-title">Status dos Chamados</div><div class="chart-subtitle">Distribui??o atual do per?odo</div></div>
-            </div>
+        <div class="chart-container"><div class="chart-header">
+            <div><div class="chart-title">Status dos Chamados</div><div class="chart-subtitle">Distribui??o atual do per?odo</div></div></div>
             <div class="status-grid">
-                <div class="status-card"><div class="status-icon">?</div><div class="status-count" style="color: #22c55e;">34</div><div class="status-label">Conclu?dos (85.0%)</div></div>
+                <div class="status-card"><div class="status-icon">?</div><div class="status-count" style="color: #22c55e;">35</div><div class="status-label">Conclu?dos (85.4%)</div></div>
                 <div class="status-card"><div class="status-icon">?</div><div class="status-count" style="color: #3b82f6;">3</div><div class="status-label">Em Andamento</div></div>
                 <div class="status-card"><div class="status-icon">?</div><div class="status-count" style="color: #ef4444;">2</div><div class="status-label">Cancelados</div></div>
                 <div class="status-card"><div class="status-icon">?</div><div class="status-count" style="color: #f59e0b;">1</div><div class="status-label">N?o Iniciado</div></div>
-            </div>
-        </div>
-        
+            </div></div>
         <div class="grid-2">
-            <div class="chart-container">
-                <div class="chart-header"><div><div class="chart-title">Volume de Chamados - Hist?rico</div><div class="chart-subtitle">?ltimos 6 meses</div></div></div>
-                <canvas id="volumeChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <div class="chart-header"><div><div class="chart-title">Performance OKR4 - Hist?rico</div><div class="chart-subtitle">Meta: 3,20 chamados/HC</div></div></div>
-                <canvas id="okrChart"></canvas>
-            </div>
+            <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Volume de Chamados - Hist?rico</div><div class="chart-subtitle">?ltimos 6 meses</div></div></div>
+                <canvas id="volumeChart"></canvas></div>
+            <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Performance OKR - Hist?rico</div><div class="chart-subtitle">Meta: 152 chamados/m?s</div></div></div>
+                <canvas id="okrChart"></canvas></div>
         </div>
-        
         <div class="grid-3">
-            <div class="chart-container">
-                <div class="chart-header"><div><div class="chart-title">Por ?rea</div><div class="chart-subtitle">Distribui??o de chamados</div></div></div>
-                <canvas id="areaChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <div class="chart-header"><div><div class="chart-title">Por Sistema</div><div class="chart-subtitle">Plataformas utilizadas</div></div></div>
-                <canvas id="sistemaChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <div class="chart-header"><div><div class="chart-title">Timeline Di?ria</div><div class="chart-subtitle">Chamados por dia</div></div></div>
-                <canvas id="timelineChart"></canvas>
-            </div>
+            <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Por ?rea</div><div class="chart-subtitle">Distribui??o de chamados</div></div></div>
+                <canvas id="areaChart"></canvas></div>
+            <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Por Sistema</div><div class="chart-subtitle">Plataformas utilizadas</div></div></div>
+                <canvas id="sistemaChart"></canvas></div>
+            <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Timeline Di?ria</div><div class="chart-subtitle">Chamados por dia</div></div></div>
+                <canvas id="timelineChart"></canvas></div>
         </div>
-        
         <div class="grid-2">
-            <div class="chart-container">
-                <div class="chart-header"><div><div class="chart-title">Top 5 Motivos de Abertura</div><div class="chart-subtitle">Principais demandas</div></div></div>
-                <canvas id="motivosChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <div class="chart-header"><div><div class="chart-title">Top 5 Solicitantes</div><div class="chart-subtitle">Maiores demandantes</div></div></div>
-                <canvas id="solicitantesChart"></canvas>
-            </div>
+            <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Top 5 Motivos de Abertura</div><div class="chart-subtitle">Principais demandas</div></div></div>
+                <canvas id="motivosChart"></canvas></div>
+            <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Top 5 Solicitantes</div><div class="chart-subtitle">Maiores demandantes</div></div></div>
+                <canvas id="solicitantesChart"></canvas></div>
         </div>
-        
-        <div class="chart-container">
-            <div class="chart-header"><div><div class="chart-title">Performance dos Analistas SOPS</div><div class="chart-subtitle">Distribui??o de atendimentos</div></div></div>
-            <canvas id="analistasChart"></canvas>
-        </div>
-        
+        <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Performance dos Analistas SOPS</div><div class="chart-subtitle">Distribui??o de atendimentos</div></div></div>
+            <canvas id="analistasChart"></canvas></div>
         <div class="insights-section">
-            <div class="insights-title">? Insights & Destaques</div>
-            <div class="insight-block">
-                <h3>? Pontos Positivos</h3>
-                <ul>
-                    <li>M?trica OKR parcial: 0.64 chamados/HC (500% da meta!)</li>
-                    <li>Taxa de conclus?o: 85.0%</li>
-                    <li>Volume controlado: ~6.7 chamados/dia ?til</li>
-                    <li>Distribui??o equilibrada entre analistas</li>
-                </ul>
-            </div>
+            <div class="insights-title">? Insights & Destaques - 02/2026</div>
+            <div class="insight-block"><h3>? Pontos Positivos</h3><ul>
+                <li>Volume month-to-date: 41 chamados (89.9% da meta proporcional de 46)</li>
+                <li>Taxa de conclus?o s?lida: 85.4% dos chamados j? resolvidos</li>
+                <li>Baixo ?ndice de cancelamentos: apenas 4.9%</li>
+                <li>Distribui??o equilibrada entre analistas</li>
+                <li>Volume controlado: ~6.8 chamados/dia ?til</li>
+            </ul></div>
+            <div class="insight-block"><h3>?? Pontos de Aten??o</h3><ul>
+                <li>Per?odo parcial (6 de 20 dias ?teis do m?s) - dados n?o representam m?s completo</li>
+                <li>3 chamados em andamento + 1 n?o iniciado necessitam acompanhamento</li>
+                <li>Hubspot representa 85.4% dos sistemas - alta depend?ncia</li>
+            </ul></div>
+            <div class="insight-block"><h3>? Proje??o para Fevereiro Completo</h3><ul>
+                <li>Mantendo m?dia atual: ~137 chamados estimados para o m?s completo</li>
+                <li>Proje??o de atingimento: 90% da meta de 152 chamados</li>
+                <li>Expectativa de ficar abaixo da meta at? o fim do m?s</li>
+            </ul></div>
         </div>
-        
-        <div class="footer"><strong>Dashboard Suporte SOPS</strong> | Gabriel Tecnologia ? 2026<br>Atualizada automaticamente via Apps Script</div>
+        <div class="footer"><strong>Dashboard Suporte SOPS</strong> | Gabriel Tecnologia ? 2026<br>
+            Atualizada automaticamente via Apps Script</div>
     </div>
-    
     <script>
         const colors = { primary: '#3b82f6', secondary: '#8b5cf6', success: '#22c55e', warning: '#f59e0b', danger: '#ef4444', cyan: '#06b6d4', purple: '#a855f7' };
-        Chart.defaults.color = '#94a3b8';
-        Chart.defaults.borderColor = '#334155';
-        
-        new Chart(document.getElementById('volumeChart').getContext('2d'), {
-            type: 'line',
-            data: {
-                labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'],
-                datasets: [{
-                    label: 'Chamados',
-                    data: [175, 263, 180, 159, 170, 40],
-                    borderColor: colors.primary,
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    pointRadius: 5,
-                    pointBackgroundColor: colors.primary
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } },
-                scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } }
-            }
-        });
-        
-        new Chart(document.getElementById('okrChart').getContext('2d'), {
-            type: 'line',
-            data: {
-                labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'],
-                datasets: [
-                    { label: 'OKR4', data: [4.43, 6.66, 4.56, 4.03, 3.21, 0.64], borderColor: colors.primary, backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: colors.primary },
-                    { label: 'Meta (3,20)', data: [3.20, 3.20, 3.20, 3.20, 3.20, 3.20], borderColor: colors.danger, borderDash: [5, 5], pointRadius: 0, fill: false }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } },
-                scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } }
-            }
-        });
-        
-        new Chart(document.getElementById('areaChart').getContext('2d'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Comercial', 'Pr?-Vendas', 'Central'],
-                datasets: [{ data: [23, 11, 6], backgroundColor: [colors.primary, colors.secondary, colors.cyan], borderWidth: 0 }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }
-            }
-        });
-        
-        new Chart(document.getElementById('sistemaChart').getContext('2d'), {
-            type: 'pie',
-            data: {
-                labels: ["Hubspot","Airtable","Clicksign"],
-                datasets: [{ data: [34,4,2], backgroundColor: [colors.warning, colors.success, colors.danger], borderWidth: 0 }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }
-            }
-        });
-        
-        new Chart(document.getElementById('timelineChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ['02/02', '03/02', '04/02', '05/02', '06/02', '09/02'],
-                datasets: [{ label: 'Chamados', data: [5, 10, 7, 9, 7, 2], backgroundColor: colors.secondary, borderRadius: 6 }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } },
-                scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } }
-            }
-        });
-        
-        new Chart(document.getElementById('motivosChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ["Contratos","Pipeline & Automa??e","Integra??o Airtable ","Permiss?es","Endere?o/CEP/Local"],
-                datasets: [{ label: 'Chamados', data: [9,7,5,4,4], backgroundColor: [colors.primary, colors.secondary, colors.success, colors.warning, colors.purple], borderRadius: 6 }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } },
-                scales: { x: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, y: { grid: { display: false }, ticks: { color: '#94a3b8' } } }
-            }
-        });
-        
-        new Chart(document.getElementById('solicitantesChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ["Luiz Pellegrini","Eduarda Barros","Caio Almeida","Sacha Jagoda","Rodrigo Moura"],
-                datasets: [{ label: 'Chamados', data: [5,4,4,3,3], backgroundColor: colors.cyan, borderRadius: 6 }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } },
-                scales: { x: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, y: { grid: { display: false }, ticks: { color: '#94a3b8' } } }
-            }
-        });
-        
-        new Chart(document.getElementById('analistasChart').getContext('2d'), {
-            type: 'bar',
-            data: {
-                labels: ["Eduardo Abreu","Patrick Cruz","Guilherme Kenji","Lucas Amim","Gabriel Barcellos","Diego Pace"],
-                datasets: [{ label: 'Chamados Atendidos', data: [12,10,9,6,2,1], backgroundColor: colors.primary, borderRadius: 8 }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } },
-                scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } }
-            }
-        });
+        Chart.defaults.color = '#94a3b8'; Chart.defaults.borderColor = '#334155';
+        new Chart(document.getElementById('volumeChart').getContext('2d'), { type: 'line', data: { labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'], datasets: [{ label: 'Chamados', data: [175, 263, 180, 159, 170, 41], borderColor: colors.primary, backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: colors.primary }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
+        new Chart(document.getElementById('okrChart').getContext('2d'), { type: 'line', data: { labels: ['Set/25', 'Out/25', 'Nov/25', 'Dez/25', 'Jan/26', 'Fev/26'], datasets: [{ label: 'Volume', data: [175, 263, 180, 159, 170, 41], borderColor: colors.primary, backgroundColor: 'rgba(59, 130, 246, 0.1)', tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: colors.primary }, { label: 'Meta (152)', data: [152, 152, 152, 152, 152, 152], borderColor: colors.danger, borderDash: [5, 5], pointRadius: 0, fill: false }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
+        new Chart(document.getElementById('areaChart').getContext('2d'), { type: 'doughnut', data: { labels: ['Comercial', 'Pr?-Vendas', 'Central'], datasets: [{ data: [24, 11, 6], backgroundColor: [colors.primary, colors.secondary, colors.cyan], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } } } });
+        new Chart(document.getElementById('sistemaChart').getContext('2d'), { type: 'pie', data: { labels: ["Hubspot","Airtable","Clicksign"], datasets: [{ data: [35,4,2], backgroundColor: [colors.warning, colors.success, colors.danger], borderWidth: 0 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', padding: 15, usePointStyle: true } }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } } } });
+        new Chart(document.getElementById('timelineChart').getContext('2d'), { type: 'bar', data: { labels: ['02/02', '03/02', '04/02', '05/02', '06/02', '09/02'], datasets: [{ label: 'Chamados', data: [5, 10, 7, 9, 7, 2], backgroundColor: colors.secondary, borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
+        new Chart(document.getElementById('motivosChart').getContext('2d'), { type: 'bar', data: { labels: ["Contratos","Pipeline & Automa??es","Integra??o Airtable ? OS/","Permiss?es","Endere?o/CEP/Local"], datasets: [{ label: 'Chamados', data: [9,7,6,4,4], backgroundColor: [colors.primary, colors.secondary, colors.success, colors.warning, colors.purple], borderRadius: 6 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { x: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, y: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
+        new Chart(document.getElementById('solicitantesChart').getContext('2d'), { type: 'bar', data: { labels: ["Luiz Pellegrini","Eduarda Barros","Caio Almeida","Rodrigo Moura","Sacha Jagoda"], datasets: [{ label: 'Chamados', data: [5,4,4,4,3], backgroundColor: colors.cyan, borderRadius: 6 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { x: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, y: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
+        new Chart(document.getElementById('analistasChart').getContext('2d'), { type: 'bar', data: { labels: ["Eduardo Abreu","Patrick Cruz","Guilherme Kenji","Lucas Amim","Gabriel Barcellos","Diego Pace"], datasets: [{ label: 'Chamados Atendidos', data: [12,10,9,6,3,1], backgroundColor: colors.primary, borderRadius: 8 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
     </script>
 </body>
 </html>
