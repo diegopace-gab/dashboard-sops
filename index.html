@@ -56,20 +56,20 @@
     <div class="container">
         <div class="header"><div class="header-content">
             <div class="header-left"><h1>&#128202; Dashboard Executiva - Suporte SOPS</h1><div class="period">Per&#237;odo: 03/2026</div></div>
-            <div class="header-right"><div class="update-time">Atualizado: 06/03/2026 18:25</div><div class="gabriel-logo">Gabriel Tecnologia</div></div>
+            <div class="header-right"><div class="update-time">Atualizado: 09/03/2026 11:28</div><div class="gabriel-logo">Gabriel Tecnologia</div></div>
         </div></div>
         <div class="kpi-grid">
             <div class="kpi-card"><div class="kpi-icon">&#128222;</div><div class="kpi-label">Total de Chamados</div><div class="kpi-value">46</div><div class="kpi-subtitle">5 dias &#250;teis monitorados</div></div>
-            <div class="kpi-card"><div class="kpi-icon">&#9989;</div><div class="kpi-label">Taxa de Conclus&#227;o</div><div class="kpi-value">84.8%</div><div class="kpi-subtitle">39 chamados finalizados</div><span class="kpi-badge badge-success">Acima de 75%</span></div>
+            <div class="kpi-card"><div class="kpi-icon">&#9989;</div><div class="kpi-label">Taxa de Conclus&#227;o</div><div class="kpi-value">89.1%</div><div class="kpi-subtitle">41 chamados finalizados</div><span class="kpi-badge badge-success">Acima de 75%</span></div>
             <div class="kpi-card"><div class="kpi-icon">&#128200;</div><div class="kpi-label">M&#233;dia Di&#225;ria</div><div class="kpi-value">9.2</div><div class="kpi-subtitle">chamados por dia &#250;til</div></div>
             <div class="kpi-card"><div class="kpi-icon">&#127919;</div><div class="kpi-label">OKR - Volume de Chamados</div><div class="kpi-value">83%</div><div class="kpi-subtitle">46 de 38 limite MTD (152 m&#234;s completo)</div><span class="kpi-badge badge-warning">17% abaixo da meta (8 chamados acima do limite)</span></div>
         </div>
         <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Status dos Chamados</div><div class="chart-subtitle">Distribui&#231;&#227;o atual do per&#237;odo</div></div></div>
             <div class="status-grid">
-                <div class="status-card"><div class="status-icon">&#9989;</div><div class="status-count" style="color: #22c55e;">39</div><div class="status-label">Conclu&#237;dos (84.8%)</div></div>
-                <div class="status-card"><div class="status-icon">&#128260;</div><div class="status-count" style="color: #3b82f6;">2</div><div class="status-label">Em Andamento</div></div>
+                <div class="status-card"><div class="status-icon">&#9989;</div><div class="status-count" style="color: #22c55e;">41</div><div class="status-label">Conclu&#237;dos (89.1%)</div></div>
+                <div class="status-card"><div class="status-icon">&#128260;</div><div class="status-count" style="color: #3b82f6;">1</div><div class="status-label">Em Andamento</div></div>
                 <div class="status-card"><div class="status-icon">&#10060;</div><div class="status-count" style="color: #ef4444;">3</div><div class="status-label">Cancelados</div></div>
-                <div class="status-card"><div class="status-icon">&#128203;</div><div class="status-count" style="color: #f59e0b;">2</div><div class="status-label">N&#227;o Iniciado</div></div>
+                <div class="status-card"><div class="status-icon">&#128203;</div><div class="status-count" style="color: #f59e0b;">1</div><div class="status-label">N&#227;o Iniciado</div></div>
             </div></div>
         <div class="grid-2">
             <div class="chart-container"><div class="chart-header"><div><div class="chart-title">Volume de Chamados - Hist&#243;rico</div><div class="chart-subtitle">&#218;ltimos 6 meses</div></div></div><canvas id="volumeChart"></canvas></div>
@@ -89,13 +89,13 @@
             <div class="insights-title">&#128161; Insights & Destaques - 03/2026</div>
             <div class="insight-block"><h3>&#9989; Pontos Positivos</h3><ul>
                 <li><strong>Performance OKR: 83%</strong> - Estamos 17% acima da meta (46 de 38 limite MTD)</li>
-                <li><strong>Taxa de conclus&#227;o:</strong> 84.8% dos chamados resolvidos</li>
+                <li><strong>Taxa de conclus&#227;o:</strong> 89.1% dos chamados resolvidos</li>
                 <li><strong>Cancelamentos:</strong> Apenas 6.5% - volume controlado</li>
                 <li><strong>Distribui&#231;&#227;o equilibrada:</strong> Carga bem distribu&#237;da entre analistas</li>
             </ul></div>
             <div class="insight-block"><h3>&#9888; Pontos de Aten&#231;&#227;o</h3><ul>
                 <li><strong>Dados parciais:</strong> 5 de 20 dias &#250;teis (25% do m&#234;s)</li>
-                <li><strong>Pendentes:</strong> 2 em andamento + 2 n&#227;o iniciado</li>
+                <li><strong>Pendentes:</strong> 1 em andamento + 1 n&#227;o iniciado</li>
                 <li><strong>Depend&#234;ncia:</strong> Hubspot com 82.6% dos chamados</li>
             </ul></div>
             <div class="insight-block"><h3>&#128202; Proje&#231;&#227;o Fim do M&#234;s</h3><ul>
@@ -116,7 +116,7 @@
         new Chart(document.getElementById('timelineChart').getContext('2d'), { type: 'bar', data: { labels: ["02/03","03/03","04/03","05/03","06/03"], datasets: [{ label: 'Chamados', data: [8,12,6,10,10], backgroundColor: colors.secondary, borderRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
         new Chart(document.getElementById('motivosChart').getContext('2d'), { type: 'bar', data: { labels: ["Contratos","Rota/Propriet?rio","Pipeline & Automa??es","Permiss?es","Integra??o Airtable ? OS/"], datasets: [{ label: 'Chamados', data: [11,9,7,5,3], backgroundColor: [colors.primary, colors.secondary, colors.success, colors.warning, colors.purple], borderRadius: 6 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { x: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, y: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
         new Chart(document.getElementById('solicitantesChart').getContext('2d'), { type: 'bar', data: { labels: ["Sacha Jagoda","Bernardo Soares","Ricardo Guarilha","Felipe Menezes","Gustavo Felipe"], datasets: [{ label: 'Chamados', data: [6,6,6,4,3], backgroundColor: colors.cyan, borderRadius: 6 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { x: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, y: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
-        new Chart(document.getElementById('analistasChart').getContext('2d'), { type: 'bar', data: { labels: ["Eduardo Abreu","Guilherme Kenji","Lucas Amim","Patrick Cruz","Gabriel Barcellos"], datasets: [{ label: 'Chamados Atendidos', data: [24,12,4,3,1], backgroundColor: colors.primary, borderRadius: 8 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
+        new Chart(document.getElementById('analistasChart').getContext('2d'), { type: 'bar', data: { labels: ["Eduardo Abreu","Guilherme Kenji","Lucas Amim","Patrick Cruz","Gabriel Barcellos"], datasets: [{ label: 'Chamados Atendidos', data: [24,11,4,3,2], backgroundColor: colors.primary, borderRadius: 8 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1e293b', padding: 12, titleColor: '#e2e8f0', bodyColor: '#cbd5e1', borderColor: '#334155', borderWidth: 1 } }, scales: { y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } } });
     </script>
 </body>
 </html>
